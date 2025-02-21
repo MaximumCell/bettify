@@ -14,11 +14,13 @@ export const requireAdmin = async (req, res, next) => {
     const currentUser = await clerkClient.users.getUser(req.auth.userId);
     const isAdmin =
       process.env.ADMIN_EMAIL === currentUser.primaryEmailAddress?.emailAddress;
-      if (!isAdmin) {
-        return res.status(403).json({ message: "Unauthorized - You must be Admin" });
-      }
-      next();
+    if (!isAdmin) {
+      return res
+        .status(403)
+        .json({ message: "Unauthorized - You must be Admin" });
+    }
+    next();
   } catch (error) {
-    return res.status(500).json({ message: "Internel server error" });
+    next(error);
   }
 };

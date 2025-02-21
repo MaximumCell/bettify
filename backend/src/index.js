@@ -26,8 +26,8 @@ app.use(
     tempFileDir: path.join(__dirname, "temp"),
     createParentPath: true,
     limits: {
-        filesize: 10*1024*1024
-  },
+      filesize: 10 * 1024 * 1024,
+    },
   })
 );
 
@@ -37,6 +37,10 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/songs", songRoutes);
 app.use("/api/album", albumRoutes);
 app.use("/api/stats", statRoutes);
+
+app.use((err, req, res, next) => {
+  res.status(500).json({ message: process.env.NODE_ENV === "production" ? "Internal server error": err.message });
+});
 
 app.listen(5000, () => {
   console.log("Server is runnig on port " + PORT);
