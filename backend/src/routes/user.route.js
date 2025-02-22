@@ -1,11 +1,10 @@
 import { Router } from "express";
 import { protectRoute } from "../middleware/auth.middleware.js";
+import { getAllUser } from "../controller/user.controller.js";
 
 const router = Router();
 
-router.get("/like",protectRoute, (req, res) => {
-  req.auth.userId;
-  res.send("User Route wiht get method");
-});
+router.get("/",protectRoute, getAllUser);
+//todo message
 
 export default router;
