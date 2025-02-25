@@ -5,7 +5,7 @@ import { authCallBack } from "../controller/auth.controller.js";
 
 const router = Router();
 
-router.get("/callback", authCallBack)
+router.post("/callback", authCallBack)
 
 
 

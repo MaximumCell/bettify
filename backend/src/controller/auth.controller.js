@@ -1,20 +1,32 @@
-import {User} from "../models/user.model.js";
+import { User } from "../models/user.model.js";
 
-
-export const authCallBack =  async (req, res) => {
+export const authCallBack = async (req, res) => {
     try {
-        const {id, firstName, lastName, imageUrl} = req.body;
-        const user = await User.findOne({clerkId: id});
+        console.log("Received request:", req.body); // Debugging log
+
+        const { id, firstName, lastName, imageUrl } = req.body;
+
+        if (!id || !firstName || !lastName) {
+            return res.status(400).json({ error: "Missing required fields" });
+        }
+
+        // 🔹 Check if user already exists
+        let user = await User.findOne({ clerkId: id });
+
         if (!user) {
-            await User.create({
+            user = await User.create({
                 clerkId: id,
                 fullName: `${firstName} ${lastName}`,
-                imageUrl
-            })
+                imageUrl: imageUrl || "https://example.com/default-avatar.png", // Default image
+            });
+            console.log("New user created:", user);
+        } else {
+            console.log("User already exists:", user);
         }
-        res.status(200).json({success: true})
+
+        res.status(200).json({ success: true, user });
     } catch (error) {
-        console.log("Error in auht callback", error);
-        next(error);
+        console.error("Error in auth callback:", error);
+        res.status(500).json({ error: error.message }); // Send error response
     }
-}
+};
