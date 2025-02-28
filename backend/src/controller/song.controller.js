@@ -19,6 +19,7 @@ export const getFeatureSongs = async (req, res, next) => {
         $project: {
           _id: 1,
           title: 1,
+          artist: 1,
           imageUrl: 1,
           audioUrl: 1,
         },
