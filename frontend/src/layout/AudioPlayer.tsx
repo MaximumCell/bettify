@@ -37,7 +37,7 @@ const AudioPlayer = () => {
       if (isPlaying) audio.play();
     }
   }, [currentSong, isPlaying]);
-  return <audio ref={audioRef} controls hidden />;
+  return <audio ref={audioRef} />;
 
 };
 
