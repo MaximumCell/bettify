@@ -1,5 +1,5 @@
 import { axiosInstance } from "@/lib/axios";
-import { Album, Song } from "@/types";
+import { Album, Song, Stats } from "@/types";
 import { create } from "zustand";
 interface MusicStore {
   songs: Song[];
@@ -10,12 +10,15 @@ interface MusicStore {
   featuredSongs: Song[];
   madeForYouSongs: Song[];
   trendingSongs: Song[];
+  stats: Stats
 
   fetchAlbums: () => Promise<void>;
   fetchAlbumById: (id: string) => Promise<void>;
   fetchFeaturedSongs: () => Promise<void>;
   fetchMadeForYouSongs: () => Promise<void>;
   fetchTrendingSongs: () => Promise<void>;
+  fetchStats: () => Promise<void>;
+  fetchSongs: () => Promise<void>;
 }
 export const useMusicStore = create<MusicStore>((set) => ({
   albums: [],
@@ -26,6 +29,37 @@ export const useMusicStore = create<MusicStore>((set) => ({
   madeForYouSongs: [],
   featuredSongs: [],
   trendingSongs: [],
+  stats: {
+    totalSongs: 0,
+    totalAlbum: 0,
+    totalUsers: 0,
+    totalArtists: 0,
+  },
+
+  fetchSongs: async() => {
+    set({isLoading: true, error: null})
+    try {
+      const response = await axiosInstance.get("/songs")
+      set({ songs: response.data })
+
+    } catch (error: any) {
+      set({ error: error.message})   
+    } finally {
+      set({isLoading: false})
+    }
+  },
+  fetchStats:async() => {
+    set({isLoading: true, error: null})
+    try {
+      const response = await axiosInstance.get("/stats")
+      set({ stats: response.data })
+
+    } catch (error: any) {
+      set({ error: error.message})   
+    } finally {
+      set({isLoading: false})
+    }
+  },
 
   fetchAlbums: async () => {
     set({
