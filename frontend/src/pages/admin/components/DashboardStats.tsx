@@ -6,7 +6,6 @@ import StatsCard from "./StatsCard";
 const DashboardStats = () => {
 	const { stats } = useMusicStore();
   
-  console.log("Stats:", stats); // Log the stats object
 	const statsData = [
 		{
 			icon: ListMusic,

@@ -16,8 +16,8 @@ import statRoutes from "./routes/stat.route.js";
 
 dotenv.config();
 
-const app = express();
 const __dirname = path.resolve();
+const app = express();
 const PORT = process.env.PORT;
 
 app.use(
