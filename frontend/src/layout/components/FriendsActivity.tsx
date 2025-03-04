@@ -5,6 +5,8 @@ import { useUser } from "@clerk/clerk-react";
 import { HeadphonesIcon, Music, Users } from "lucide-react";
 import { useEffect } from "react";
 
+
+
 const FriendsActivity = () => {
   const { users, fetchUsers, onlineUsers, userActivities } = useChatStore();
   const { user } = useUser();
@@ -38,7 +40,7 @@ const FriendsActivity = () => {
                 <div className="flex items-start gap-3">
                   <div className="relative">
                     <Avatar className="size-10 border border-zinc-800">
-                      <AvatarImage src={user.imageUrl} alt={user.fullName} />
+                      <AvatarImage src={user.imageURL} alt={user.fullName} />
                       <AvatarFallback>{user.fullName[0]}</AvatarFallback>
                     </Avatar>
                     <div
