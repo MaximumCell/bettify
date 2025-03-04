@@ -1,4 +1,4 @@
-import AddSongDialog from './addSongDialog';
+import AddSongDialog from './AddSongDialog';
 import {
   Card,
   CardContent,
