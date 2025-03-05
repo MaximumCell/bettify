@@ -83,7 +83,7 @@ app.use((err, req, res, next) => {
     .json({
       message:
         process.env.NODE_ENV === "production"
-          ? "Internal server error"
+          ? "Internal server errores"
           : err.message,
     });
 });
