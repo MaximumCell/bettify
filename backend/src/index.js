@@ -29,7 +29,7 @@ initializeSocket(httpServer);
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bettify-frontend.onrender.com"],
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -46,13 +46,6 @@ app.use(
   })
 );
 
-app.use("/api/users", userRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/songs", songRoutes);
-app.use("/api/albums", albumRoutes);
-app.use("/api/stats", statRoutes);
-
 const tempDir = path.join(process.cwd(), "temp");
 cron.schedule("0 * * * *", () => {
   if (fs.existsSync(tempDir)) {
@@ -68,13 +61,19 @@ cron.schedule("0 * * * *", () => {
   }
 }); // every hour
 
-if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "frontend", "dist")));
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+app.use("/api/songs", songRoutes);
+app.use("/api/albums", albumRoutes);
+app.use("/api/stats", statRoutes);
 
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
-  });
+    res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"))
+  })
 }
 
 app.use((err, req, res, next) => {
