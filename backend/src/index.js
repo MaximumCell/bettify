@@ -29,7 +29,7 @@ initializeSocket(httpServer);
 
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://bettify.onrender.com"],
+    origin: ["http://localhost:3000", "https://bettify-frontend.onrender.com"],
     credentials: true,
   })
 );
