@@ -69,10 +69,11 @@ cron.schedule("0 * * * *", () => {
 }); // every hour
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend", "build"))); // 🔹 Use "build"
+  const __dirname = path.resolve();
+  app.use(express.static(path.join(__dirname, "../frontend", "dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html")); // 🔹 Use "build"
+    res.sendFile(path.resolve(__dirname, "../frontend", "dist", "index.html"));
   });
 }
 
